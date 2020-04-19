@@ -28,8 +28,8 @@ async def memes(ctx, subreddit='leagueofmemes'):
 
 
 @bot.command()
-async def summoner(ctx, name):
-    message = lol.summoner(name)
+async def top_champions(ctx, name):
+    message = lol.top_champions(name)
     await ctx.channel.send(message)
 
 

@@ -55,7 +55,7 @@ def memes(subreddit='leagueofmemes'):
         return response['url']
 
 
-def summoner(name):
+def top_champions(name):
     summoner_url = f"{RIOT_BASE_URL}/summoner/v4/summoners/by-name/{name}?api_key={RIOT_API_KEY}"
     summoner_resp = requests.get(summoner_url).json()
 
