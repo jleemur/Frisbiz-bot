@@ -44,7 +44,7 @@ async def summoners(ctx):
 async def list(ctx):
     try:
         summoner_names = []
-        summoners = summoners_db.getall()
+        summoners = summoners_db.get_keys()
         if summoners:
             for summoner in summoners:
                 summoner_names.append(summoner)
@@ -78,7 +78,16 @@ async def rm(ctx, name: str):
 
 @tasks.loop(seconds=120)
 async def check_for_new_matches():
-    print('checking for new matches for registered summoners...')
+    print('Checking for new matches for registered summoners...')
+    summoners = summoners_db.get_keys()
+    for summoner_name in summoners:
+        summoner = summoners_db.get(summoner_name)
+        summoner_id = summoner['accountId']
+        print(summoner_id)
+        # todo: get matchlist for all summoner_id's
+        # create a set of matchlists, so no duplicates
+        # only save matches that are within `seconds`
+        # get match, format match, print on discord
 
 
 # @bot.event
