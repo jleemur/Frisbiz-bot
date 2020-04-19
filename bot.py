@@ -3,6 +3,7 @@ from dotenv import load_dotenv
 from discord.ext import commands, tasks
 import requests
 import lol
+import summoners_db
 
 # get environment from .env file
 load_dotenv()
@@ -41,15 +42,25 @@ async def summoners(ctx):
 
 @summoners.command()
 async def list(ctx):
-    # todo: list all registered summoners in db
-    await ctx.send("Todo: list all registered summoners")
+    try:
+        summoner_names = []
+        summoners = summoners_db.getall()
+        if summoners:
+            for summoner in summoners:
+                summoner_names.append(summoner)
+            message = ", ".join(summoner_names)
+        else:
+            raise Exception('No summoners found')
+    except Exception as err:
+        message = err
+    await ctx.send(message)
 
 
 @summoners.command()
 async def add(ctx, name: str):
-    # todo: get summoner name, check if it's in db, add summoner to db
     try:
         message = lol.get_summoner(name)
+        summoners_db.add(name, message)
     except Exception as err:
         message = err
     await ctx.send(message)
@@ -57,9 +68,9 @@ async def add(ctx, name: str):
 
 @summoners.command()
 async def rm(ctx, name: str):
-    # todo: get summoner name, check if it's in db, remove summoner from db
     try:
-        message = lol.get_summoner(name)
+        summoners_db.rm(name)
+        message = f"{name} removed"
     except Exception as err:
         message = err
     await ctx.send(message)
