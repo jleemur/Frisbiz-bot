@@ -65,7 +65,7 @@ async def rm(ctx, name: str):
     await ctx.send(message)
 
 
-@tasks.loop(seconds=10)
+@tasks.loop(seconds=120)
 async def check_for_new_matches():
     print('checking for new matches for registered summoners...')
 
