@@ -1,8 +1,8 @@
-# Frisbiz discord bot
+# Frisbiz Discord Bot
 
 Playing around with discord & riot api. Main use case will be to post a completed league of legends match to channel whenever a new match is found for a registered player.
 
-RIOT RATE LIMITS
+### Riot rate limits
 ```
 20 requests every 1 seconds(s)
 100 requests every 2 minutes(s)
@@ -13,7 +13,7 @@ RIOT RATE LIMITS
 Python 3.8.2
 ```
 
-### Supported Commands
+### Supported commands
 ```
 Prefix for bot commands is <BIZ>
 
