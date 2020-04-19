@@ -56,13 +56,10 @@ def memes(subreddit='leagueofmemes'):
 
 
 def top_champions(name):
-    summoner_url = f"{RIOT_BASE_URL}/summoner/v4/summoners/by-name/{name}?api_key={RIOT_API_KEY}"
-    summoner_resp = requests.get(summoner_url).json()
-
-    if 'status' in summoner_resp:
-        # error
-        message = summoner_resp['status']['message']
-        return message
+    try:
+        summoner_resp = get_summoner(name)
+    except Exception as err:
+        return err
 
     # get champions data
     champions_url = f"{CHAMPIONS_BASE_URL}/data/en_US/champion.json"
@@ -104,3 +101,11 @@ def _get_champions_from_matchlist(matchlist):
     # sort by highest # played
     latest_champions_sorted = {k: v for k, v in sorted(latest_champions.items(), key=lambda latest_champions: latest_champions[1], reverse=True)}
     return latest_champions_sorted
+
+
+def get_summoner(name):
+    summoner_url = f"{RIOT_BASE_URL}/summoner/v4/summoners/by-name/{name}?api_key={RIOT_API_KEY}"
+    summoner_resp = requests.get(summoner_url).json()
+    if 'status' in summoner_resp:
+        raise Exception(summoner_resp['status']['message'])
+    return summoner_resp
